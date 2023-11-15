@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^5.11.1",
+    "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -10,7 +12,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.dev.js"
+    "build": "webpack --config webpack.dev.js",
+    "generate-api-clients": "npx openapi-generator-cli generate"
   },
   "eslintConfig": {
     "extends": [
@@ -37,6 +40,7 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/runtime": "^7.23.2",
+    "@openapitools/openapi-generator-cli": "^2.7.0",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^16.18.61",
     "@types/react": "^18.2.37",

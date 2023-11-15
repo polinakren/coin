@@ -16,6 +16,7 @@
     "paths": {
       "~assets/*": ["src/assets/*"],
       "~services/*": ["src/services/*"],
+      "coin-api-client": ["src/coin-api-client"],
       "~constants/*": ["src/constants/*"],
       "~components": ["src/components"],
       "~modules/*": ["src/modules/*"],

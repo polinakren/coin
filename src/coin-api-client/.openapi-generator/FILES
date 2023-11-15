@@ -1,0 +1,16 @@
+.openapi-generator-ignore
+apis/BalanceApi.ts
+apis/CoinsApi.ts
+apis/index.ts
+index.ts
+models/ApiBalanceGet200Response.ts
+models/ApiBalanceGet200ResponseData.ts
+models/ApiCoinsGet200Response.ts
+models/ApiCoinsGet200ResponseDataInner.ts
+models/ApiCoinsGet200ResponseMeta.ts
+models/ApiCoinsIdPriceGet200Response.ts
+models/ApiCoinsIdPriceGet200ResponseData.ts
+models/ApiCoinsIdTransferPost422Response.ts
+models/ApiCoinsIdTransferPostRequest.ts
+models/index.ts
+runtime.ts

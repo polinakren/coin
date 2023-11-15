@@ -15,6 +15,7 @@ module.exports = {
     alias: {
       '~assets': path.resolve(process.cwd(), 'src/assets'),
       '~components': path.resolve(process.cwd(), 'src/components'),
+      '~coin-api-client': path.resolve(process.cwd(), 'src/coin-api-client'),
       '~services': path.resolve(process.cwd(), 'src/services'),
       '~constants': path.resolve(process.cwd(), 'src/constants'),
       '~modules': path.resolve(process.cwd(), 'src/modules'),

@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  title: Crypto API
+  version: 1.0.0
+paths:
+  /api/balance:
+    get:
+      summary: Баланс текущего пользователя
+      tags:
+        - Balance
+      responses:
+        200:
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      balance:
+                        type: integer
+                        description: Актуальный баланс
+                        example: 15000
+                    required:
+                      - balance
+                required:
+                  - data
+  /api/coins:
+    get:
+      summary: Список монет
+      tags:
+        - Coins
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Текущая страница
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Размер страницы
+          schema:
+            type: integer
+            minimum: 0
+            default: 5
+            example: 5
+        - name: title
+          in: query
+          required: false
+          description: Фильтрация по названию
+          schema:
+            type: string
+            example: 'Bitcoin'
+      responses:
+        200:
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Идентификатор монеты
+                          example: 89
+                        title:
+                          type: string
+                          description: Название монеты
+                          example: Etherium
+                        network:
+                          type: integer
+                          enum: [1, 2, 3]
+                          description: Поддерживаемая сеть (1 - ERC20, 2 - BEP20, 3 - TRC20)
+                          example: 1
+                        status:
+                          type: integer
+                          enum: [1, 2, 3]
+                          description: Статус монеты (1 - Доступна, 2 - В обработке, 3 - Недоступна)
+                          example: 3
+                      required:
+                        - id
+                        - title
+                        - network
+                        - status
+                  meta:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: Текущая страница
+                        example: 1
+                      limit:
+                        type: integer
+                        description: Размер страницы
+                        example: 5
+                      total:
+                        type: integer
+                        description: Общее кол-во монет
+                        example: 20
+                      page_count:
+                        type: integer
+                        description: Общее кол-во страниц
+                        example: 4
+                    required:
+                      - page
+                      - limit
+                      - total
+                      - page_count
+                required:
+                  - data
+                  - meta
+  /api/coins/{id}/price:
+    get:
+      summary: Стоимость монеты в центах
+      tags:
+        - Coins
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор монеты
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      price:
+                        type: integer
+                        description: Актуальная стоимость монеты
+                        example: 1000
+                    required:
+                      - price
+                required:
+                  - data
+  /api/coins/{id}/transfer:
+    post:
+      summary: Трансфер монеты
+      tags:
+        - Coins
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор монеты
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Сумма трансфера в центах
+                  example: 10000
+      responses:
+        200:
+          description: Успешный запрос
+        422:
+          description: Ошибка валидации
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: 'Недостаточно средств'
+                required:
+                  - errors
+tags:
+  - name: Balance
+    description: 'Баланс'
+  - name: Coins
+    description: 'Монеты'
