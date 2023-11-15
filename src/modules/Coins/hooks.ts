@@ -15,7 +15,9 @@ export const useCoinApi = (req: ApiCoinsGetRequest) => {
     if (isDevelopment) {
       // Use mock data during development
       return Promise.resolve(
-        import('../../mocks/coins.json').then(module => module.default as ApiCoinsGet200ResponseDataInner[])
+        import('../../mocks/coins.json').then(module => {
+          return getSlicedData(module.default as ApiCoinsGet200ResponseDataInner[], req?.page, req?.limit);
+        })
       );
     } else {
       // Use API call in other environments
@@ -26,4 +28,14 @@ export const useCoinApi = (req: ApiCoinsGetRequest) => {
   const { data: coins, isLoading } = useQuery(queryKey, queryFn);
 
   return { coins: coins, isLoading };
+};
+
+const getSlicedData = (data: ApiCoinsGet200ResponseDataInner[], page?: number, limit?: number) => {
+  if (page && limit) {
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    return data.slice(startIndex, endIndex);
+  } else {
+    return data;
+  }
 };
