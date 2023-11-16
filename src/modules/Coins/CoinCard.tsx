@@ -36,7 +36,7 @@ export const CoinCard = ({ coin, buyHandler }: CoinCardProps) => {
 
 const Spacer = styled.div`
   min-width: 400px;
-  margin-bottom: 20px;
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 20px;

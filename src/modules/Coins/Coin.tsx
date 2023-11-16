@@ -25,7 +25,7 @@ export const Coin = () => {
 
   const handleFilterChange = (values: CoinFilterValues) => {
     setCurrentPage(1);
-    setFilter(values);
+    setFilter({ title: values.title });
   };
 
   return (
@@ -34,9 +34,9 @@ export const Coin = () => {
         <Skeleton />
       ) : (
         <CenterBlock>
-          <Info balance={balance} filter={defaultFilter} handleFilterChange={handleFilterChange} />
+          <Info balance={balance} filter={filter} handleFilterChange={handleFilterChange} />
           <CoinsList coins={coins} />
-          <Pagination
+          <StyledPagination
             current={currentPage}
             pageSize={itemsPerPage}
             total={total}
@@ -63,4 +63,8 @@ const Spacer = styled.div`
 
 const CenterBlock = styled.div`
   max-width: 500px;
+`;
+
+export const StyledPagination = styled(Pagination)`
+  margin-top: 20px;
 `;

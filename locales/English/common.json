@@ -11,7 +11,8 @@
   },
   "title": {
     "balance": "Balance",
-    "buy": "Buy coins"
+    "buy": "Buy coins",
+    "by": "by"
   },
   "message": {
     "title": "Success",

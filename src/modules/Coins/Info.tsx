@@ -1,12 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
+import { Form, Input, Typography } from 'antd';
 import styled from '@emotion/styled';
 import { ApiBalanceGet200ResponseData as IBalance } from 'coin-api-client';
 
 import { Palette } from '~utils/Palette';
-import { Form, Input as CompInput } from '~components';
 
 export interface CoinFilterValues {
   title: string;
@@ -26,8 +25,17 @@ export const Info = ({ balance, filter, handleFilterChange }: InfoProps) => {
       <StyledTitle>
         {t('title.balance')}: {balance}¢
       </StyledTitle>
-      <Form initialValues={{ filter }} onValuesChange={handleFilterChange}>
-        <CompInput name='title' placeholder={t('action.search')} addonAfter={<SearchOutlined />} />
+      <Form>
+        <Input
+          name={'title'}
+          type={'text'}
+          value={filter.title}
+          placeholder={'Search'}
+          onChange={e => handleFilterChange({ title: e.target.value })}
+          autoFocus
+          allowClear
+          addonAfter={<SearchOutlined />}
+        />
       </Form>
     </Spacer>
   );

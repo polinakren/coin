@@ -51,7 +51,7 @@ export const BuyForm = ({ open, onClose, coin }: GroupsFormProps) => {
       ) : (
         <ModalForm<BuyFormValuesType>
           open={open}
-          title={t('title.buy')}
+          title={`${t('action.buy')} ${coin?.title} ${t('title.by')} ${price}¢`}
           okText={t('action.buy')}
           onCancel={onClose}
           cancelText={t('action.cancel')}
