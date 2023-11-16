@@ -28,28 +28,25 @@ const ModalForm = <T extends {}>({
         <Loader />
       ) : (
         <Form {...formProps}>
-          {formikBag => {
-            console.log(!formikBag.dirty, !formikBag.isValid, formikBag.isSubmitting, formikBag);
-            return (
-              <Modal
-                forceRender
-                open={open}
-                title={title}
-                onCancel={e => {
-                  onCancel?.(e);
-                  formikBag.resetForm();
-                }}
-                okText={okText}
-                okButtonProps={{
-                  disabled: !formikBag.isValid || formikBag.isSubmitting,
-                }}
-                cancelText={cancelText}
-                onOk={onOk ? getOnOkHandler(formikBag, onOk) : undefined}
-              >
-                {isFunction(children) ? children(formikBag) : children}
-              </Modal>
-            );
-          }}
+          {formikBag => (
+            <Modal
+              forceRender
+              open={open}
+              title={title}
+              onCancel={e => {
+                onCancel?.(e);
+                formikBag.resetForm();
+              }}
+              okText={okText}
+              okButtonProps={{
+                disabled: !formikBag.isValid || formikBag.isSubmitting,
+              }}
+              cancelText={cancelText}
+              onOk={onOk ? getOnOkHandler(formikBag, onOk) : undefined}
+            >
+              {isFunction(children) ? children(formikBag) : children}
+            </Modal>
+          )}
         </Form>
       )}
     </>

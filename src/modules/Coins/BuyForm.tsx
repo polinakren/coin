@@ -1,16 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { notification, Skeleton } from 'antd';
+import { ApiCoinsGet200ResponseDataInner as ICoin } from 'coin-api-client';
 
 import { Input, ModalForm } from '~components';
-import { ApiCoinsGet200ResponseDataInner } from 'coin-api-client';
 import { useBalanceApi, useCoinActions, useCoinPriceByIdApi } from '~modules/Coins/hooks';
 import { object, number } from '~utils/validation';
 
 export type GroupsFormProps = {
   open: boolean;
   onClose: () => void;
-  coin?: ApiCoinsGet200ResponseDataInner;
+  coin?: ICoin;
 };
 
 interface BuyFormValuesType {
@@ -28,10 +28,14 @@ export const BuyForm = ({ open, onClose, coin }: GroupsFormProps) => {
 
   const handleSubmitForm = async (values: BuyFormValuesType) => {
     const amount = price ? values.count * price : 0;
+
+    // Use API call in other environments
     // await transferCoins({
     //   id: coin?.id!,
     //   apiCoinsIdTransferPostRequest: { amount: amount },
     // });
+
+    // Use simple variant to get success during development
     await buySchema.validate(values);
     notification.success({
       message: t('message.title'),

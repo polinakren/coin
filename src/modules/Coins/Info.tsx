@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { SearchOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import styled from '@emotion/styled';
-import { ApiBalanceGet200ResponseData } from 'coin-api-client';
+import { ApiBalanceGet200ResponseData as IBalance } from 'coin-api-client';
 
 import { Palette } from '~utils/Palette';
 import { Form, Input as CompInput } from '~components';
@@ -13,12 +13,12 @@ export interface CoinFilterValues {
 }
 
 type InfoProps = {
-  balance?: ApiBalanceGet200ResponseData['balance'];
-  onFilterChange: (values: CoinFilterValues) => void;
+  balance?: IBalance['balance'];
+  handleFilterChange: (values: CoinFilterValues) => void;
   filter: CoinFilterValues;
 };
 
-export const Info = ({ balance, filter, onFilterChange }: InfoProps) => {
+export const Info = ({ balance, filter, handleFilterChange }: InfoProps) => {
   const { t } = useTranslation(['common']);
 
   return (
@@ -26,7 +26,7 @@ export const Info = ({ balance, filter, onFilterChange }: InfoProps) => {
       <StyledTitle>
         {t('title.balance')}: {balance}¢
       </StyledTitle>
-      <Form initialValues={{ filter }} onValuesChange={onFilterChange}>
+      <Form initialValues={{ filter }} onValuesChange={handleFilterChange}>
         <CompInput name='title' placeholder={t('action.search')} addonAfter={<SearchOutlined />} />
       </Form>
     </Spacer>

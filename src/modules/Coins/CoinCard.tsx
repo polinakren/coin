@@ -1,4 +1,4 @@
-import { ApiCoinsGet200ResponseDataInner } from 'coin-api-client';
+import { ApiCoinsGet200ResponseDataInner as ICoin } from 'coin-api-client';
 import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import { Typography } from 'antd';
@@ -6,8 +6,8 @@ import { Typography } from 'antd';
 import { Palette } from '~utils/Palette';
 
 type CoinCardProps = {
-  coin: ApiCoinsGet200ResponseDataInner;
-  buyHandler: (coin: ApiCoinsGet200ResponseDataInner) => void;
+  coin: ICoin;
+  buyHandler: (coin: ICoin) => void;
 };
 
 export const CoinCard = ({ coin, buyHandler }: CoinCardProps) => {

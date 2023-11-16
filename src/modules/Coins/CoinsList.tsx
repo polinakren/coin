@@ -1,4 +1,4 @@
-import { ApiCoinsGet200ResponseDataInner } from 'coin-api-client';
+import { ApiCoinsGet200ResponseDataInner as ICoin } from 'coin-api-client';
 import styled from '@emotion/styled';
 
 import { CoinCard } from '~modules/Coins/CoinCard';
@@ -6,14 +6,13 @@ import { ModalForm } from '~components';
 import { BuyForm } from '~modules/Coins/BuyForm';
 
 interface CoinsListProps {
-  coins?: ApiCoinsGet200ResponseDataInner[];
+  coins?: ICoin[];
 }
 
 export const CoinsList = ({ coins }: CoinsListProps) => {
-  const { closeModal, isOpenedModal, openModal, setCurrentItem, currentItem } =
-    ModalForm.useModalForm<ApiCoinsGet200ResponseDataInner>();
+  const { closeModal, isOpenedModal, openModal, setCurrentItem, currentItem } = ModalForm.useModalForm<ICoin>();
 
-  const buyHandler = (record: ApiCoinsGet200ResponseDataInner) => {
+  const buyHandler = (record: ICoin) => {
     setCurrentItem({
       item: record,
     });
