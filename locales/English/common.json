@@ -1,6 +1,8 @@
 {
   "action": {
-    "search": "Search"
+    "search": "Search",
+    "cancel": "Cancel",
+    "buy": "Buy"
   },
   "card": {
     "title": "Title",
@@ -8,6 +10,11 @@
     "status": "Status"
   },
   "title": {
-    "balance": "Balance"
+    "balance": "Balance",
+    "buy": "Buy coins"
+  },
+  "message": {
+    "title": "Success",
+    "description": "Your data has been successfully processed"
   }
 }

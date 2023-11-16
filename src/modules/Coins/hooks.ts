@@ -2,13 +2,18 @@ import {
   ApiCoinsGet200Response as CoinApiResponse,
   ApiCoinsGet200ResponseDataInner as CoinData,
   ApiCoinsGetRequest,
+  ApiCoinsIdPriceGetRequest,
+  ApiCoinsIdTransferPostOperationRequest,
 } from 'coin-api-client';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import { balanceApi, coinsApi } from '~services/api';
 import { Env } from '~utils/Env';
+import { getSlicedData } from '~utils/getSlicedData';
 
 const GET_COINS = 'GET_COINS';
+const GET_BALANCE = 'GET_BALANCE';
+const GET_COIN_PRICE_BY_ID = 'GET_COIN_PRICE_BY_ID';
 
 export const useCoinApi = (req: ApiCoinsGetRequest) => {
   const queryKey = [GET_COINS, req?.page, req?.limit, req?.title];
@@ -30,21 +35,49 @@ export const useCoinApi = (req: ApiCoinsGetRequest) => {
   return { coins: data?.data, total: data?.meta.total, isLoading };
 };
 
-const getSlicedData = (data: CoinData[], page = 1, limit = 5, title?: string): CoinApiResponse => {
-  const filteredData = title ? data.filter(item => item.title.toLowerCase().startsWith(title.toLowerCase())) : data;
+export const useBalanceApi = () => {
+  const queryKey = [GET_BALANCE];
 
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-
-  const slicedData = filteredData.slice(startIndex, endIndex);
-
-  return {
-    data: slicedData,
-    meta: {
-      page,
-      limit,
-      total: filteredData.length,
-      pageCount: Math.ceil(filteredData.length / limit),
-    },
+  const queryFn = async () => {
+    if (Env.isDev) {
+      // Use mock data during development
+      return { balance: 50 };
+    } else {
+      // Use API call in other environments
+      const { data } = await balanceApi.apiBalanceGet();
+      return { data };
+    }
   };
+
+  const { data, isLoading } = useQuery(queryKey, queryFn);
+
+  return { balance: data?.balance, isLoading };
+};
+
+export const useCoinPriceByIdApi = (id?: ApiCoinsIdPriceGetRequest['id']) => {
+  const queryKey = [GET_COIN_PRICE_BY_ID, id];
+
+  const queryFn = async () => {
+    if (Env.isDev) {
+      // Use mock data during development
+      return { price: 5 };
+    } else {
+      // Use API call in other environments
+      const { data } = await coinsApi.apiCoinsIdPriceGet({ id: id! });
+      return { data };
+    }
+  };
+
+  const { data, isLoading } = useQuery(queryKey, queryFn, {
+    enabled: id !== undefined,
+  });
+
+  return { price: data?.price, isLoading };
+};
+
+const postTransferCoins = (req: ApiCoinsIdTransferPostOperationRequest) => coinsApi.apiCoinsIdTransferPost(req);
+
+export const useCoinActions = () => {
+  const { mutateAsync: transferCoins } = useMutation(postTransferCoins);
+  return { transferCoins };
 };

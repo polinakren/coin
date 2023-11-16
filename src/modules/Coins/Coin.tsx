@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { Skeleton, Pagination } from 'antd';
 import styled from '@emotion/styled';
 
-import { useCoinApi } from '~modules/Coins/hooks';
+import { useBalanceApi, useCoinApi } from '~modules/Coins/hooks';
 import { CoinsList } from '~modules/Coins/CoinsList';
 import { CoinFilterValues, Info } from '~modules/Coins/Info';
-import { Palette } from '~utils/Palette';
 
 export const Coin = () => {
   const itemsPerPage = 5;
-
   const [filter, setFilter] = useState<CoinFilterValues>(defaultFilter);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const {
@@ -20,23 +17,24 @@ export const Coin = () => {
     isLoading: isLoadingCoins,
   } = useCoinApi({ page: currentPage, limit: itemsPerPage, title: filter.title });
 
+  const { balance, isLoading: isLoadingBalance } = useBalanceApi();
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   const onValuesChange = (values: CoinFilterValues) => {
-    console.log(values);
     setCurrentPage(1);
     setFilter(values);
   };
 
   return (
     <Spacer>
-      {isLoadingCoins ? (
+      {isLoadingCoins || isLoadingBalance ? (
         <Skeleton />
       ) : (
         <CenterBlock>
-          <Info balance={2} filter={defaultFilter} onFilterChange={onValuesChange} />
+          <Info balance={balance} filter={defaultFilter} onFilterChange={onValuesChange} />
           <CoinsList coins={coins} />
           <StyledPagination
             current={currentPage}

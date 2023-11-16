@@ -7,15 +7,17 @@ import { Palette } from '~utils/Palette';
 
 type CoinCardProps = {
   coin: ApiCoinsGet200ResponseDataInner;
+  buyHandler: (coin: ApiCoinsGet200ResponseDataInner) => void;
 };
 
-export const CoinCard = ({ coin }: CoinCardProps) => {
+export const CoinCard = ({ coin, buyHandler }: CoinCardProps) => {
   const { title, network, status } = coin;
-
   const { t } = useTranslation(['common']);
 
+  const onClick = () => buyHandler(coin);
+
   return (
-    <Spacer>
+    <Spacer onClick={onClick}>
       <div>
         <StyledTitle>{t('card.title')}</StyledTitle>
         <StyledName>{title}</StyledName>
