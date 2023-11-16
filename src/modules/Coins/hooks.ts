@@ -6,19 +6,18 @@ import {
 import { useQuery } from 'react-query';
 
 import { balanceApi, coinsApi } from '~services/api';
+import { Env } from '~utils/Env';
 
 const GET_COINS = 'GET_COINS';
-
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const useCoinApi = (req: ApiCoinsGetRequest) => {
   const queryKey = [GET_COINS, req?.page, req?.limit, req?.title];
 
   const queryFn = async () => {
-    if (isDevelopment) {
+    if (Env.isDev) {
       // Use mock data during development
       const module = await import('../../mocks/coins.json');
-      return getSlicedData(module.default as CoinData[], req?.page, req?.limit);
+      return getSlicedData(module.default as CoinData[], req?.page, req?.limit, req?.title);
     } else {
       // Use API call in other environments
       const { data, meta } = await coinsApi.apiCoinsGet(req);
@@ -31,18 +30,21 @@ export const useCoinApi = (req: ApiCoinsGetRequest) => {
   return { coins: data?.data, total: data?.meta.total, isLoading };
 };
 
-const getSlicedData = (data: CoinData[], page = 4, limit = 5): CoinApiResponse => {
+const getSlicedData = (data: CoinData[], page = 1, limit = 5, title?: string): CoinApiResponse => {
+  const filteredData = title ? data.filter(item => item.title.toLowerCase().startsWith(title.toLowerCase())) : data;
+
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
-  const slicedData = data.slice(startIndex, endIndex);
+
+  const slicedData = filteredData.slice(startIndex, endIndex);
 
   return {
     data: slicedData,
     meta: {
       page,
       limit,
-      total: data.length,
-      pageCount: Math.ceil(data.length / limit),
+      total: filteredData.length,
+      pageCount: Math.ceil(filteredData.length / limit),
     },
   };
 };

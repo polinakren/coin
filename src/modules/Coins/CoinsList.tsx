@@ -14,4 +14,5 @@ export const CoinsList = ({ coins }: CoinsListProps) => {
 const Spacer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;

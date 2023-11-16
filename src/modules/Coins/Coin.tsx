@@ -1,21 +1,33 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Skeleton, Pagination } from 'antd';
 import styled from '@emotion/styled';
 
-import { useBalanceApi, useCoinApi } from '~modules/Coins/hooks';
+import { useCoinApi } from '~modules/Coins/hooks';
 import { CoinsList } from '~modules/Coins/CoinsList';
+import { CoinFilterValues, Info } from '~modules/Coins/Info';
 import { Palette } from '~utils/Palette';
-import { Info } from '~modules/Coins/Info';
 
 export const Coin = () => {
   const itemsPerPage = 5;
 
+  const [filter, setFilter] = useState<CoinFilterValues>(defaultFilter);
+
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { coins, total, isLoading: isLoadingCoins } = useCoinApi({ page: currentPage, limit: itemsPerPage });
+  const {
+    coins,
+    total,
+    isLoading: isLoadingCoins,
+  } = useCoinApi({ page: currentPage, limit: itemsPerPage, title: filter.title });
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const onValuesChange = (values: CoinFilterValues) => {
+    console.log(values);
+    setCurrentPage(1);
+    setFilter(values);
   };
 
   return (
@@ -23,8 +35,8 @@ export const Coin = () => {
       {isLoadingCoins ? (
         <Skeleton />
       ) : (
-        <>
-          <Info balance={3} />
+        <CenterBlock>
+          <Info balance={2} filter={defaultFilter} onFilterChange={onValuesChange} />
           <CoinsList coins={coins} />
           <StyledPagination
             current={currentPage}
@@ -33,10 +45,14 @@ export const Coin = () => {
             onChange={handlePageChange}
             defaultPageSize={itemsPerPage}
           />
-        </>
+        </CenterBlock>
       )}
     </Spacer>
   );
+};
+
+const defaultFilter: CoinFilterValues = {
+  title: '',
 };
 
 const Spacer = styled.div`
@@ -57,4 +73,8 @@ export const StyledPagination = styled(Pagination)`
   .ant-pagination-item-active a {
     color: ${Palette.primary_600};
   }
+`;
+
+const CenterBlock = styled.div`
+  max-width: 500px;
 `;
