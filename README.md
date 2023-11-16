@@ -10,6 +10,10 @@
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/polinakren/coin">
 </div>
 
+<div align="center">
+  <img alt="Main Image" width="100%" src="https://github.com/polinakren/coin/raw/master/.github/main.jpg">
+</div>
+
 ## ✨ Features
 - 🛡 Written in TypeScript.
 - 🎨 CSS-in-JS.
