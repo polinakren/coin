@@ -63,17 +63,7 @@ const Spacer = styled.div`
   align-items: center;
 `;
 
-export const StyledPagination = styled(Pagination)`
-  margin-top: 20px;
-  
-  .ant-pagination-item-active {
-    border-color: ${Palette.primary_600};
-  }
-  
-  .ant-pagination-item-active a {
-    color: ${Palette.primary_600};
-  }
-`;
+export const StyledPagination = styled(Pagination)``;
 
 const CenterBlock = styled.div`
   max-width: 500px;

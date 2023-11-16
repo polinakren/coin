@@ -6,6 +6,7 @@ import { ApiBalanceGet200ResponseData } from 'coin-api-client';
 
 import { Palette } from '~utils/Palette';
 import { Form, Input as CompInput } from '~components';
+import { useTranslation } from 'react-i18next';
 
 export interface CoinFilterValues {
   title: string;
@@ -18,11 +19,15 @@ type InfoProps = {
 };
 
 export const Info = ({ balance, filter, onFilterChange }: InfoProps) => {
+  const { t } = useTranslation(['common']);
+
   return (
     <Spacer>
-      <StyledTitle>Balance: {balance}</StyledTitle>
+      <StyledTitle>
+        {t('title.balance')}: {balance}
+      </StyledTitle>
       <Form initialValues={{ filter }} onValuesChange={onFilterChange}>
-        <CompInput name='title' placeholder={'Search'} addonAfter={<SearchOutlined />} />
+        <CompInput name='title' placeholder={t('action.search')} addonAfter={<SearchOutlined />} />
       </Form>
     </Spacer>
   );

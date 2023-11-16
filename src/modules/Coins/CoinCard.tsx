@@ -1,5 +1,6 @@
 import { ApiCoinsGet200ResponseDataInner } from 'coin-api-client';
 import styled from '@emotion/styled';
+import { useTranslation } from 'react-i18next';
 import { Typography } from 'antd';
 
 import { Palette } from '~utils/Palette';
@@ -11,18 +12,20 @@ type CoinCardProps = {
 export const CoinCard = ({ coin }: CoinCardProps) => {
   const { title, network, status } = coin;
 
+  const { t } = useTranslation(['common']);
+
   return (
     <Spacer>
       <div>
-        <StyledTitle>Title</StyledTitle>
+        <StyledTitle>{t('card.title')}</StyledTitle>
         <StyledName>{title}</StyledName>
       </div>
       <div>
-        <StyledTitle>Network</StyledTitle>
+        <StyledTitle>{t('card.network')}</StyledTitle>
         <StyledName>{network}</StyledName>
       </div>
       <div>
-        <StyledTitle>Status</StyledTitle>
+        <StyledTitle>{t('card.status')}</StyledTitle>
         <StyledName>{status}</StyledName>
       </div>
     </Spacer>
@@ -31,7 +34,7 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
 
 const Spacer = styled.div`
   min-width: 400px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 20px;
@@ -41,7 +44,7 @@ const Spacer = styled.div`
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 0 25px 0 rgba(159, 140, 220, 0.7);
+    box-shadow: 0 0 25px 0 rgba(92, 123, 255, 0.7);
   }
 `;
 

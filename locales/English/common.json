@@ -1,0 +1,13 @@
+{
+  "action": {
+    "search": "Search"
+  },
+  "card": {
+    "title": "Title",
+    "network": "Network",
+    "status": "Status"
+  },
+  "title": {
+    "balance": "Balance"
+  }
+}
