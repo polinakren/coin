@@ -44,6 +44,7 @@ const Spacer = styled.div`
   background-color: white;
   box-shadow: 0 0 14px 0 rgba(176, 165, 209, 0.4);
   cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
     box-shadow: 0 0 25px 0 rgba(92, 123, 255, 0.7);

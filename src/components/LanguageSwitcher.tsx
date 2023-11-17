@@ -4,8 +4,12 @@ import { Button } from 'antd';
 
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
+
   const isRussian = i18n.language === 'ru';
   const isEnglish = i18n.language === 'en';
+
+  const englishButtonType = isEnglish ? 'primary' : 'default';
+  const russianButtonType = isRussian ? 'primary' : 'default';
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -13,10 +17,10 @@ export const LanguageSwitcher = () => {
 
   return (
     <div>
-      <Button type={isEnglish ? 'primary' : 'default'} onClick={() => changeLanguage('en')}>
+      <Button type={englishButtonType} onClick={() => changeLanguage('en')}>
         English
       </Button>
-      <Button type={isRussian ? 'primary' : 'default'} onClick={() => changeLanguage('ru')}>
+      <Button type={russianButtonType} onClick={() => changeLanguage('ru')}>
         Русский
       </Button>
     </div>

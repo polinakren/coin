@@ -6,8 +6,9 @@ import { useBalanceApi, useCoinApi } from '~modules/Coins/hooks';
 import { CoinsList } from '~modules/Coins/CoinsList';
 import { CoinFilterValues, Info } from '~modules/Coins/Info';
 
+const DEFAULT_ITEMS_PER_PAGE = 5;
+
 export const Coin = () => {
-  const itemsPerPage = 5;
   const [filter, setFilter] = useState<CoinFilterValues>(defaultFilter);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -15,7 +16,7 @@ export const Coin = () => {
     coins,
     total,
     isLoading: isLoadingCoins,
-  } = useCoinApi({ page: currentPage, limit: itemsPerPage, title: filter.title });
+  } = useCoinApi({ page: currentPage, limit: DEFAULT_ITEMS_PER_PAGE, title: filter.title });
 
   const { balance, isLoading: isLoadingBalance } = useBalanceApi();
 
@@ -23,9 +24,9 @@ export const Coin = () => {
     setCurrentPage(page);
   };
 
-  const handleFilterChange = (values: CoinFilterValues) => {
+  const handleFilterChange = ({ title }: CoinFilterValues) => {
     setCurrentPage(1);
-    setFilter({ title: values.title });
+    setFilter({ title });
   };
 
   return (
@@ -38,10 +39,9 @@ export const Coin = () => {
           <CoinsList coins={coins} />
           <StyledPagination
             current={currentPage}
-            pageSize={itemsPerPage}
+            pageSize={DEFAULT_ITEMS_PER_PAGE}
             total={total}
             onChange={handlePageChange}
-            defaultPageSize={itemsPerPage}
           />
         </CenterBlock>
       )}

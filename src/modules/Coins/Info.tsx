@@ -26,16 +26,18 @@ export const Info = ({ balance, filter, handleFilterChange }: InfoProps) => {
         {t('title.balance')}: {balance}¢
       </StyledTitle>
       <Form>
-        <Input
-          name={'title'}
-          type={'text'}
-          value={filter.title}
-          placeholder={'Search'}
-          onChange={e => handleFilterChange({ title: e.target.value })}
-          autoFocus
-          allowClear
-          addonAfter={<SearchOutlined />}
-        />
+        <Form.Item>
+          <Input
+            name={'title'}
+            type={'text'}
+            value={filter.title}
+            placeholder={'Search'}
+            onChange={e => handleFilterChange({ title: e.target.value })}
+            autoFocus
+            allowClear
+            addonAfter={<SearchOutlined />}
+          />
+        </Form.Item>
       </Form>
     </Spacer>
   );
@@ -51,4 +53,5 @@ const Spacer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  gap: 20px;
 `;

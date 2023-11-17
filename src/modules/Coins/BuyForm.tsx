@@ -7,6 +7,9 @@ import { Input, ModalForm } from '~components';
 import { useBalanceApi, useCoinActions, useCoinPriceByIdApi } from '~modules/Coins/hooks';
 import { object, number } from '~utils/validation';
 
+const MAX_COINS = 1;
+const MIN_COINS = 1;
+
 export type GroupsFormProps = {
   open: boolean;
   onClose: () => void;
@@ -37,11 +40,15 @@ export const BuyForm = ({ open, onClose, coin }: GroupsFormProps) => {
 
     // Use simple variant to get success during development
     await buySchema.validate(values);
+    handleSuccessNotification();
+    onClose();
+  };
+
+  const handleSuccessNotification = () => {
     notification.success({
       message: t('message.title'),
       description: t('message.description'),
     });
-    onClose();
   };
 
   return (
@@ -73,7 +80,7 @@ const StyledInput = styled(Input)`
 `;
 
 const getPossibleCoins = (balance?: number, price?: number) => {
-  if (balance === undefined || price === undefined) {
+  if (balance === undefined || price === undefined || price === 0) {
     return 0;
   } else {
     return Math.ceil(balance / price);
@@ -81,13 +88,10 @@ const getPossibleCoins = (balance?: number, price?: number) => {
 };
 
 const getScheme = (possibleCoins?: number) => {
-  if (possibleCoins) {
-    return object({
-      count: number().required().max(possibleCoins).min(1),
-    });
-  } else {
-    return object({
-      count: number().required().max(1).min(1),
-    });
-  }
+  return object({
+    count: number()
+      .required()
+      .max(possibleCoins || MAX_COINS)
+      .min(MIN_COINS),
+  });
 };

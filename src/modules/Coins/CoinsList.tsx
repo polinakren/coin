@@ -21,8 +21,8 @@ export const CoinsList = ({ coins }: CoinsListProps) => {
 
   return (
     <Spacer>
-      {coins?.map(coin => <CoinCard buyHandler={buyHandler} key={coin.id} coin={coin} />)}
-      <BuyForm open={isOpenedModal} onClose={closeModal} coin={currentItem?.item} />
+      {coins && coins.map(coin => <CoinCard buyHandler={buyHandler} key={coin.id} coin={coin} />)}
+      <BuyForm key={currentItem?.item?.id} open={isOpenedModal} onClose={closeModal} coin={currentItem?.item} />
     </Spacer>
   );
 };
