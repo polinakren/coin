@@ -17,6 +17,7 @@
 ## ✨ Features
 - 🛡 Written in TypeScript.
 - 🎨 CSS-in-JS.
+- 🌈 Used i18next
 
 ## 🔨 Development
 
@@ -25,8 +26,12 @@ Before starting the work, follow these steps:
 npm install
 ```
 ```bash
+npx openapi-generator-cli generate
+```
+```bash
 npm start
 ```
+
 
 Open [http://localhost:3001](http://localhost:3001) in a browser.
 
